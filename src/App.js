@@ -1,23 +1,82 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useState } from 'react';
+import PetsList from './PetsList';
+import usePetFilter from './usePetFilter';
+import img4 from './images/img4.jpg';
+import img1 from './images/img1.jpg';
+import img2 from './images/img2.jpg';
+import img3 from './images/img3.jpg'
 
 function App() {
+  const [pets, setPets] = useState([
+    {
+      name: 'Buddy',
+      race: 'Golden Retriever',
+      type: 'Dog',
+      location: 'New York',
+      photo: img1,
+      status: 'available',
+    },
+    {
+      name: 'Buddy',
+      race: 'Golden Retriever',
+      type: 'Dog',
+      location: 'New York',
+      photo: img2,
+      status: 'available',
+    },
+    {
+      name: 'Buddy',
+      race: 'Golden Retriever',
+      type: 'Dog',
+      location: 'New York',
+      photo: img3,
+      status: 'available',
+    },{
+      name: 'Buddy',
+      race: 'Golden Retriever',
+      type: 'Dog',
+      location: 'New York',
+      photo: img4,
+      status: 'available',
+    }
+    // Add more pets here...
+  ]);
+
+  const { filters, setFilters, filteredPets } = usePetFilter(pets);
+
+  const handleAdopt = (adoptedPet) => {
+    setPets((Pets) =>
+      Pets.map((pet) =>
+        pet === adoptedPet ? { ...pet, status: 'adopted' } : pet
+      )
+    );
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Pet Adoption</h1>
+      <div className="filters">
+        <input
+          type="text"
+          placeholder="Filter by race"
+          value={filters.race}
+          onChange={(e) => setFilters({ ...filters, race: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Filter by type"
+          value={filters.type}
+          onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Filter by location"
+          value={filters.location}
+          onChange={(e) => setFilters({ ...filters, location: e.target.value })}
+        />
+      </div>
+      <PetsList pets={filteredPets} onAdopt={handleAdopt} />
     </div>
   );
 }
