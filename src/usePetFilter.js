@@ -2,6 +2,7 @@
 import { useState } from 'react';
 
 function usePetFilter(pets) {
+  console.log(pets);
   const [filters, setFilters] = useState({
     race: '',
     type: '',

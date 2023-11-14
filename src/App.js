@@ -28,14 +28,14 @@ function App() {
     {
       name: 'Buddy',
       race: 'Golden Retriever',
-      type: 'Dog',
+      type: 'cat',
       location: 'New York',
       photo: img3,
       status: 'available',
     },{
       name: 'Buddy',
       race: 'Golden Retriever',
-      type: 'Dog',
+      type: 'cat',
       location: 'New York',
       photo: img4,
       status: 'available',
@@ -46,11 +46,19 @@ function App() {
   const { filters, setFilters, filteredPets } = usePetFilter(pets);
 
   const handleAdopt = (adoptedPet) => {
+    console.log(adoptedPet);
     setPets((Pets) =>
       Pets.map((pet) =>
-        pet === adoptedPet ? { ...pet, status: 'adopted' } : pet
+        // pet === adoptedPet ? { ...pet, status: 'adopted' } : pet
+        adoptedPet.status === "adopted" ? {...pet ,status :'not adopted'}:{...pet ,status :'adopted'}
       )
     );
+  };
+  const handelDelete = (deletedPet) => {
+    setPets((Pets) => {
+      const updatedPets = Pets.filter((pet) => pet !== deletedPet);
+      return updatedPets;
+    });
   };
 
   return (
@@ -76,7 +84,7 @@ function App() {
           onChange={(e) => setFilters({ ...filters, location: e.target.value })}
         />
       </div>
-      <PetsList pets={filteredPets} onAdopt={handleAdopt} />
+      <PetsList pets={filteredPets} onAdopt={handleAdopt} onDelete={handelDelete} />
     </div>
   );
 }

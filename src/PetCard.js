@@ -1,7 +1,7 @@
 // PetCard.js
 import React from 'react';
 
-function PetCard({ pet, onAdopt }) {
+function PetCard({ pet, onAdopt ,onDelete}) {
   const { name, race, type, location, photo, status } = pet;
 
   return (
@@ -12,9 +12,10 @@ function PetCard({ pet, onAdopt }) {
       <p>Type: {type}</p>
       <p>Location: {location}</p>
       <p>Status: {status}</p>
-      {status === 'available' && (
+      {/* {status === 'available' && */}
         <button onClick={() => onAdopt(pet)}>Adopt</button>
-      )}
+        <button onClick={() => onDelete(pet)}>Delete</button>
+      {/* } */}
     </div>
   );
 }
